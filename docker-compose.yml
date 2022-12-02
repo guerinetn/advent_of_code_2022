@@ -12,11 +12,3 @@ services:
     volumes:
       - ./sources_app:/var/www/html
       - ./data:/var/data
-  bdd:
-    container_name: advent_bdd
-    image: postgres:13.8-alpine3.16
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "adm"
