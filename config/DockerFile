@@ -1,0 +1,41 @@
+FROM php:8.1.11-apache-bullseye as base
+
+ENV	DATE_TIMEZONE Europe/Paris
+
+RUN apt update && apt install -y --no-install-recommends \
+        # Zip requirement
+        unzip \
+        libzip-dev \
+        # Intl requirement
+        libicu-dev \
+        libpq-dev \
+        && apt autoremove -y \
+        && rm -r /var/lib/apt/lists/*
+
+RUN docker-php-ext-configure zip \
+    && docker-php-ext-install zip \
+    && docker-php-ext-configure opcache \
+    && docker-php-ext-install opcache \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql pgsql
+
+RUN a2enmod rewrite vhost_alias headers expires deflate \
+    && rm -f /etc/apache2/sites-enabled/000-default.conf
+
+FROM base as dev
+
+RUN pecl install xdebug-3.1.5 \
+    && docker-php-ext-enable xdebug
+
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash \
+    && apt update && apt install -y --no-install-recommends symfony-cli
+
+RUN curl  -L -o /usr/local/bin/composer 'https://getcomposer.org/download/2.4.3/composer.phar' \
+    && chmod a+x /usr/local/bin/composer
+
+COPY config/php.ini "$PHP_INI_DIR/php.ini"
+COPY config/php.cli.ini "$PHP_INI_DIR/php-cli.ini"
+COPY config/vhost.conf /etc/apache2/sites-available/000-default.conf
+RUN a2ensite 000-default.conf
