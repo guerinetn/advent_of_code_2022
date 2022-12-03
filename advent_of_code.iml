@@ -4,6 +4,13 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/sources_app" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/friendsofphp/php-cs-fixer" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/symfony/stopwatch" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/symfony/options-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/sources_app/vendor/doctrine/lexer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
