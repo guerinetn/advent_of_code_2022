@@ -26,8 +26,8 @@ RUN a2enmod rewrite vhost_alias headers expires deflate \
 
 FROM base as dev
 
-RUN pecl install xdebug-3.1.5 \
-    && docker-php-ext-enable xdebug
+#RUN pecl install xdebug-3.1.5 \
+#    && docker-php-ext-enable xdebug
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash \
     && apt update && apt install -y --no-install-recommends symfony-cli
